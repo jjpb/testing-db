@@ -1,6 +1,6 @@
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import Mapped, mapped_column
-from app.db import Base
+from app.core.db import Base
 
 class Film(Base):
     __tablename__ = "film"

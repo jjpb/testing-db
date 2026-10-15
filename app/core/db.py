@@ -1,19 +1,28 @@
 from collections.abc import AsyncGenerator
-from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import DeclarativeBase
+from app.core.config import get_settings
+from sqlalchemy.ext.asyncio import (
+    AsyncSession,
+    async_sessionmaker,
+    create_async_engine
+)
 
-DATABASE_URL = "postgresql+asyncpg://postgres:123456@localhost:5432/pagila"
+settings = get_settings()
 
 engine = create_async_engine(
-    DATABASE_URL,
-    echo=False,
+    url=settings.database_url,
+    echo=settings.debug,
+    pool_size=settings.db_pool_size,
+    max_overflow=settings.db_max_overflow,
+    pool_recycle=settings.db_pool_recycle,
     pool_pre_ping=True
 )
 
 AsyncSessionLocal = async_sessionmaker(
-    engine,
+    bind=engine,
     class_=AsyncSession,
-    expire_on_commit=False
+    expire_on_commit=False,
+    autoflush=False
 )
 
 class Base(DeclarativeBase):
