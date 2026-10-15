@@ -3,8 +3,8 @@ from contextlib import asynccontextmanager
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.databaseproject.db import engine, get_db, Base
-from src.databaseproject.model import Film
+from app.db import engine, get_db, Base
+from app.model import Film
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
