@@ -23,3 +23,17 @@ async def get_films(
         skip=skip,
         limit=limit
     )
+
+@router.get("/home")
+@router.get("/home/{skip}")
+@router.get("/home/{skip}/{limit}")
+async def get_home_films(
+    skip: Optional[int] = 0,
+    limit: Optional[int] = 10,
+    db: AsyncSession = Depends(get_db)
+):
+    return await film_crud.get_home_films(
+        db,
+        skip=skip,
+        limit=limit
+    )
